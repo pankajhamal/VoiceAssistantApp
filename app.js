@@ -15,15 +15,26 @@ btn.onclick = () => {
   console.log("Ready to receive command");
 };
 
-recognition.onerror = function (event) {
-  console.error("Speech recognition error detected: " + event.error);
-};
+
 
 recognition.onresult = (event) => {
-  console.log("Working...");
-  const color = event.results[0][0].transcript;
-  console.log(color);
-  diagnostic.textContent = `Result received: ${color}`;
-  bg.style.backgroundColor = color;
+  console.log("Listening command....");
+  
+  const transcript = event.results[0][0].transcript.toLowerCase();
+  diagnostic.textContent = transcript
+
+  if(transcript.includes('open youtube') || transcript.includes('go to youtube')){
+    console.log("Command Recognized, Opening Youtube....!")
+
+    //Open Youtube in new window
+    window.open('https://www.youtube.com','_blank');
+  } else{
+    console.log("Command not Recognized!")
+  }
+  
   btn.innerHTML = "Start Listening";
 };
+
+recognition.onerror = (event) =>{
+  console.log(`Error occured in recognization, ${event.error}`)
+}
