@@ -18,6 +18,17 @@ const day = date.getDay().toString().padStart(2, "0");
 const formattedDate = `${year}-${month}-${day}`;
 console.log(formattedDate);
 
+// API for dog fact 
+const URL = "https://dogapi.dog/api/v1/facts"
+
+const getDogFact = async () =>{
+  let response = await fetch(URL)
+  console.log(response)
+  let data = await response.json()
+  console.log(data.facts[0])
+  result.textContent = data.facts[0]
+}
+
 //After clicking on Start listening this code run
 btn.onclick = () => {
   btn.innerHTML = "👂🏽Listening...";
@@ -56,17 +67,13 @@ recognition.onresult = (event) => {
       result.textContent =
         "Pankaj's full name is Pankaj Hamal. He is 22 years old";
         break;
+    case "dog fact":
+      getDogFact();
+      break;
+    
     default:
       result.textContent = "Invalid Command!";
   }
-  // if(transcript.includes('open youtube') || transcript.includes('go to youtube')){
-  //   console.log("Command Recognized, Opening Youtube....!")
-
-  //   //Open Youtube in new window
-  //   window.open('https://www.youtube.com','_blank');
-  // } else{
-  //   console.log("Command not Recognized!")
-  // }
 
   btn.innerHTML = "Start Listening";
 };
